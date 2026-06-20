@@ -15,6 +15,17 @@ public class Tuple implements Serializable {
         this.recordId = -1;
     }
 
+    /**
+     * Shallow copy constructor that shares the fields array.
+     * Used for zero-allocation aliasing and schema mapping in execution operators.
+     */
+    public Tuple(TupleDesc td, Tuple other) {
+        this.schema = td;
+        this.fields = other.fields;
+        this.recordId = other.recordId;
+    }
+
+
     public TupleDesc getTupleDesc() {
         return schema;
     }

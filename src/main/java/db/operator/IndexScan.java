@@ -98,12 +98,7 @@ public class IndexScan implements DbIterator {
         if (t == null) {
             throw new NoSuchElementException("Tuple at recordId " + rid + " not found");
         }
-        Tuple aliasTuple = new Tuple(aliasTd);
-        aliasTuple.setRecordId(rid);
-        for (int i = 0; i < t.getTupleDesc().numFields(); i++) {
-            aliasTuple.setField(i, t.getField(i));
-        }
-        return aliasTuple;
+        return new Tuple(aliasTd, t);
     }
 
     @Override

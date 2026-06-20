@@ -79,21 +79,21 @@ Benchmarks were executed on a dataset containing **100,000 users** (`users.csv`)
 
 ### Point Query Lookup
 *Query: `SELECT name, age FROM users WHERE id = 50000`*
-* **SeqScan + Filter:** `9.643 ms`
-* **B+ Tree IndexScan:** `0.364 ms`
-* **Performance Gain:** **26.5x faster** (96.2% latency reduction)
+* **SeqScan + Filter:** `5.714 ms`
+* **B+ Tree IndexScan:** `0.218 ms`
+* **Performance Gain:** **26.2x faster** (96.2% latency reduction)
 
 ### Index Range Scan
 *Query: `SELECT name, age FROM users WHERE age = 30` (returns 2,059 rows)*
-* **SeqScan + Filter:** `7.501 ms`
-* **B+ Tree IndexScan:** `0.707 ms`
-* **Performance Gain:** **10.6x faster** (90.6% latency reduction)
+* **SeqScan + Filter:** `5.349 ms`
+* **B+ Tree IndexScan:** `0.390 ms`
+* **Performance Gain:** **13.7x faster** (92.7% latency reduction)
 
 ### End-to-End Join Query Optimization
 *Query: `SELECT u.name, o.item FROM users u JOIN orders o ON u.id = o.user_id WHERE u.age = 30`*
-1. **Baseline Plan** *(No index, naive join order, no filter pushdown)*: `177.392 ms`
-2. **Rule-Based Plan** *(No index, pushdown + build users)*: `71.417 ms` (**2.5x faster**)
-3. **Cost-Based Plan** *(B+ Tree index + pushdown + build users)*: `36.315 ms` (**4.9x faster than Baseline**)
+1. **Baseline Plan** *(No index, naive join order, no filter pushdown)*: `69.858 ms`
+2. **Rule-Based Plan** *(No index, pushdown + build users)*: `27.861 ms` (**2.5x faster**)
+3. **Cost-Based Plan** *(B+ Tree index + pushdown + build users)*: `27.492 ms` (**2.5x faster than Baseline**)
 
 ---
 

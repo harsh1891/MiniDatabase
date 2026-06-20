@@ -52,13 +52,7 @@ public class SeqScan implements DbIterator {
     public Tuple next() throws Exception {
         if (iterator == null) throw new NoSuchElementException("Iterator not open");
         Tuple t = iterator.next();
-        
-        Tuple aliasTuple = new Tuple(aliasTd);
-        aliasTuple.setRecordId(t.getRecordId());
-        for (int i = 0; i < aliasTd.numFields(); i++) {
-            aliasTuple.setField(i, t.getField(i));
-        }
-        return aliasTuple;
+        return new Tuple(aliasTd, t);
     }
 
     @Override
