@@ -63,28 +63,6 @@ public class CostBasedOptimizer {
                 }
             }
 
-            TupleDesc originalTd = catalog.getTupleDesc(tableid);
-            List<String> requiredFields = RuleBasedOptimizer.getRequiredFieldsForTable(plan, alias, originalTd);
-            if (!requiredFields.isEmpty() && requiredFields.size() < originalTd.numFields()) {
-                TupleDesc planTd = currentPlan.getTupleDesc();
-                List<Integer> indices = new ArrayList<>();
-                for (String field : requiredFields) {
-                    try {
-                        indices.add(planTd.fieldNameToIndex(alias + "." + field));
-                    } catch (NoSuchElementException e) {
-                        try {
-                            indices.add(planTd.fieldNameToIndex(field));
-                        } catch (NoSuchElementException ex) {
-                            // Skip
-                        }
-                    }
-                }
-                if (!indices.isEmpty() && indices.size() < planTd.numFields()) {
-                    int[] indArray = indices.stream().mapToInt(i -> i).toArray();
-                    currentPlan = new Projection(currentPlan, indArray);
-                }
-            }
-
             basePlans.put(alias.toLowerCase(), currentPlan);
             
             int estimatedSize = (int) (originalSize * finalSelectivity);
