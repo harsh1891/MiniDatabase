@@ -20,6 +20,7 @@ public class BPlusTreeIndex implements Index {
     private static class LeafNode extends Node {
         List<List<Integer>> values = new ArrayList<>();
         LeafNode next = null;
+        @SuppressWarnings("unused")
         LeafNode prev = null;
         @Override
         boolean isLeaf() { return true; }

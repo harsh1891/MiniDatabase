@@ -103,7 +103,7 @@ public class Benchmark {
             }
             pointIndexScan.close();
             double indexScanTime = (System.nanoTime() - start) / 1e6;
-            System.out.println(String.format("With B+ Tree index on id:           %9.3f ms  (%.1fx faster!)", indexScanTime, seqScanTime / indexScanTime));
+            System.out.println(String.format("With B+ Tree index on id:           %9.3f ms  (%.1fx faster!)  (Rows returned: %d)", indexScanTime, seqScanTime / indexScanTime, idxCount));
 
 
             // --- BENCHMARK 2: INDEX SELECTION RANGE/MULTI-POINT SPEEDUP ---
@@ -154,7 +154,7 @@ public class Benchmark {
             }
             rangeIndexScan.close();
             double indexRangeTime = (System.nanoTime() - start) / 1e6;
-            System.out.println(String.format("With B+ Tree index on age:          %9.3f ms  (%.1fx faster!)", indexRangeTime, seqRangeTime / indexRangeTime));
+            System.out.println(String.format("With B+ Tree index on age:          %9.3f ms  (%.1fx faster!)  (Rows returned: %d)", indexRangeTime, seqRangeTime / indexRangeTime, idxRangeCount));
 
 
             // --- BENCHMARK 3: JOIN & OPTIMIZATION SPEEDUP ---
@@ -233,7 +233,7 @@ public class Benchmark {
             }
             rulePlan.close();
             double ruleTime = (System.nanoTime() - start) / 1e6;
-            System.out.println(String.format("2. Rule-Based (No Index, Pushdown + Build Users):    %9.3f ms  (%.1fx faster!)", ruleTime, naiveTime / ruleTime));
+            System.out.println(String.format("2. Rule-Based (No Index, Pushdown + Build Users):    %9.3f ms  (%.1fx faster!)  (Rows: %d)", ruleTime, naiveTime / ruleTime, ruleCount));
 
             // Clean up heap before measuring Cost-Based
             System.gc();
@@ -249,8 +249,8 @@ public class Benchmark {
             }
             optPlan.close();
             double optTime = (System.nanoTime() - start) / 1e6;
-            System.out.println(String.format("3. Cost-Based (B+ Tree Index + Build Users):          %9.3f ms  (%.1fx faster than Baseline, %.1fx faster than Rule-Based)", 
-                optTime, naiveTime / optTime, ruleTime / optTime));
+            System.out.println(String.format("3. Cost-Based (B+ Tree Index + Build Users):          %9.3f ms  (%.1fx faster than Baseline, %.1fx faster than Rule-Based)  (Rows: %d)", 
+                optTime, naiveTime / optTime, ruleTime / optTime, optCount));
 
         } catch (Exception e) {
             System.err.println("Benchmark failed: " + e.getMessage());

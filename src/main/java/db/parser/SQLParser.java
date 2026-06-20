@@ -2,7 +2,6 @@ package db.parser;
 
 import db.optimizer.LogicalPlan;
 import db.storage.*;
-import java.util.*;
 import java.util.regex.*;
 
 public class SQLParser {
@@ -45,7 +44,7 @@ public class SQLParser {
             String tableAliasPart = joinPart.substring(0, onIdx).trim();
             String onCondition = joinPart.substring(onIdx + 4).trim();
 
-            String alias = parseTableAndAlias(tableAliasPart, plan);
+            parseTableAndAlias(tableAliasPart, plan);
 
             String[] joinKeys = onCondition.split("=");
             if (joinKeys.length != 2) {
