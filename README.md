@@ -75,6 +75,8 @@ An iterator-based relational query processor executing row-by-row pipelining:
 
 ## 📈 Quantitative Performance Benchmarks
 
+![Query Engine Benchmark Results](benchmark.png)
+
 Benchmarks were executed on a dataset containing **100,000 users** (`users.csv`) and **300,716 orders** (`orders.csv`).
 
 ### Point Query Lookup
@@ -120,6 +122,9 @@ powershell -ExecutionPolicy Bypass -File ./build.ps1 -benchmark
 ```
 
 ### 4. Launch the Interactive Shell Console
+
+![Interactive SQL Console Shell Demo](console.png)
+
 Open a SQL shell to execute queries and explain plans interactively:
 ```powershell
 powershell -ExecutionPolicy Bypass -File ./build.ps1 -console
